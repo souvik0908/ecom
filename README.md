@@ -1,6 +1,6 @@
 # 🛍️ AI-Powered E-Commerce Website with Shopping Assistant
 
-This is a full-stack AI-driven e-commerce web application that integrates a smart Shopping Assistant using a fine-tuned language model powered by **Ollama**. The backend is built with **Django**, and the frontend uses **React** and **Redux** for dynamic UI and state management.
+This is a full-stack With Shopping Assistant e-commerce web application that integrates a smart Shopping Assistant using a fine-tuned language model powered by **Ollama**. The backend is built with **Django**, and the frontend uses **React** and **Redux** for dynamic UI and state management.
 
 ---
 
@@ -34,5 +34,6 @@ This is a full-stack AI-driven e-commerce web application that integrates a smar
 - Ollama for local LLM inference
 - Fine-tuned LLM using a support-focused dataset
 - React chatbot interface with context-aware responses
+- It can also solve user queries on products , suggest products to the user.
 
 ---
