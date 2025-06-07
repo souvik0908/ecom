@@ -150,41 +150,48 @@ Timestamps for each message
 
 📡 API Documentation
 🔐 Authentication & Users
-Endpoint	Method	Description	Access
-/api/users/login/	POST	: Get JWT token (email, password)	Public
-/api/users/register/	POST	:Register new user	Public
-/api/users/profile/	GET	:Get logged-in user's profile	Private (JWT)
-/api/users/profile/update/	PUT	:Update user profile	Private (JWT)
-/api/users/	GET	:Get all users (admin only)	Admin Only
-/api/users/<str:pk>/	GET:	Get a single user by ID	Admin Only
-/api/users/delete/<str:pk>/	DELETE	:Delete a user by ID	Admin Only
-/api/users/update/<str:pk>/	PUT	:Update user data	Admin Only
+
+| Endpoint                      | Method | Description                     | Access        |
+| ----------------------------- | ------ | ------------------------------- | ------------- |
+| `/api/users/login/`           | POST   | Get JWT token (email, password) | Public        |
+| `/api/users/register/`        | POST   | Register new user               | Public        |
+| `/api/users/profile/`         | GET    | Get logged-in user's profile    | Private (JWT) |
+| `/api/users/profile/update/`  | PUT    | Update user profile             | Private (JWT) |
+| `/api/users/`                 | GET    | Get all users (admin only)      | Admin Only    |
+| `/api/users/<str:pk>/`        | GET    | Get a single user by ID         | Admin Only    |
+| `/api/users/delete/<str:pk>/` | DELETE | Delete a user by ID             | Admin Only    |
+| `/api/users/update/<str:pk>/` | PUT    | Update user data                | Admin Only    |
+
 
 🛍️ Products
-Endpoint	Method	Description	Access
-/api/products/	GET	:Get all products	Public
-/api/products/<str:pk>/	GET	:Get product details	Public
-/api/products/create/	POST	:Create a new product	Admin Only
-/api/products/update/<str:pk>/	:PUT	Update a product	Admin Only
-/api/products/delete/<str:pk>/	:DELETE	Delete a product	Admin Only
-/api/products/upload/	POST	:Upload an image for a product	Admin Only
-/api/products/<str:pk>/reviews/	POST	:Submit a product review	Private (JWT)
-/api/products/products_search/	GET	:Search/filter products (query param)	Public
+| Endpoint                          | Method | Description                          | Access        |
+| --------------------------------- | ------ | ------------------------------------ | ------------- |
+| `/api/products/`                  | GET    | Get all products                     | Public        |
+| `/api/products/<str:pk>/`         | GET    | Get product details                  | Public        |
+| `/api/products/create/`           | POST   | Create a new product                 | Admin Only    |
+| `/api/products/update/<str:pk>/`  | PUT    | Update a product                     | Admin Only    |
+| `/api/products/delete/<str:pk>/`  | DELETE | Delete a product                     | Admin Only    |
+| `/api/products/upload/`           | POST   | Upload an image for a product        | Admin Only    |
+| `/api/products/<str:pk>/reviews/` | POST   | Submit a product review              | Private (JWT) |
+| `/api/products/products_search/`  | GET    | Search/filter products (query param) | Public        |
+
 
 📦 Orders
-Endpoint	Method	Description	Access
-/api/orders/	GET	:Get all orders (admin only)	Admin Only
-/api/orders/add/	POST	:Create new order	Private (JWT)
-/api/orders/myorders/	GET	:Get logged-in user's order history	Private (JWT)
-/api/orders/<str:pk>/	GET	:Get specific order by ID	Private (JWT)
-/api/orders/<str:orderId>/pay/	PUT	:Mark order as paid	Admin/User
-/api/orders/<str:orderId>/deliver/	PUT	:Mark order as delivered	Admin Only
+| Endpoint                             | Method | Description                        | Access        |
+| ------------------------------------ | ------ | ---------------------------------- | ------------- |
+| `/api/orders/`                       | GET    | Get all orders (admin only)        | Admin Only    |
+| `/api/orders/add/`                   | POST   | Create new order                   | Private (JWT) |
+| `/api/orders/myorders/`              | GET    | Get logged-in user's order history | Private (JWT) |
+| `/api/orders/<str:pk>/`              | GET    | Get specific order by ID           | Private (JWT) |
+| `/api/orders/<str:orderId>/pay/`     | PUT    | Mark order as paid                 | Admin/User    |
+| `/api/orders/<str:orderId>/deliver/` | PUT    | Mark order as delivered            | Admin Only    |
 
 💬 Chatbot
-Endpoint	Method	Description	Access
-/api/chat/	POST	:Interact with the chatbot	Private (JWT)
-/api/chat/chat/save/	POST	:Save a user message and response to history	Private (JWT)
-/api/chat/chat/history/	GET	:Retrieve chat history of the user	Private (JWT)
+| Endpoint                  | Method | Description                                 | Access        |
+| ------------------------- | ------ | ------------------------------------------- | ------------- |
+| `/api/chat/`              | POST   | Interact with the chatbot                   | Private (JWT) |
+| `/api/chat/chat/save/`    | POST   | Save a user message and response to history | Private (JWT) |
+| `/api/chat/chat/history/` | GET    | Retrieve chat history of the user           | Private (JWT) |
 
 🧪 Mock Data
 Over 100 product entries were inserted using a custom Django management script or direct JSON fixture imports.
