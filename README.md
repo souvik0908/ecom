@@ -231,7 +231,7 @@ All conversations are saved to chat_response.txt for analysis.
 Clone and Setup
 bash
 Copy code
-git clone https://github.com/yourusername/ecommerce-chatbot.git
+git clone https://github.com/yourusername/ecom.git
 cd ecommerce-chatbot
 Backend (Django)
 bash
