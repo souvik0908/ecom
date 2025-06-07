@@ -228,10 +228,12 @@ Parsed replies are checked for product names to attach metadata like product ID,
 All conversations are saved to chat_response.txt for analysis.
 
 📋 Project Setup
+
+
 Clone and Setup
 bash
 Copy code
-git clone https://github.com/yourusername/ecom.git
+git clone https://github.com/yourusername/ecommerce-chatbot.git
 cd ecommerce-chatbot
 Backend (Django)
 bash
@@ -243,15 +245,16 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 Frontend (React)
-bash
-Copy code
-cd frontend
-npm install
-npm start
-LLM Server (Ollama)
-bash
-Copy code
+bash	
+Copy code	
+cd frontend	
+npm install	
+npm start	
+LLM Server (Ollama)	
+bash	
+Copy code	
 ollama run souvik2132/Mistral_support:Q4_K_M
+ollama serve
 🧪 Sample Queries
 “What’s the cheapest smartwatch?”
 
