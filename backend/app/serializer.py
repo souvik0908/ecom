@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product,Order, OrderItem, ShippingAddress,Review
+from .models import Product,Order, OrderItem, ShippingAddress,Review,ChatMessage
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -95,3 +95,8 @@ class OrderSerializer(serializers.ModelSerializer):
         user = obj.user
         serializer = UserSerializer(user, many=False)
         return serializer.data
+    # serializers.py
+class ChatMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMessage
+        fields = ['id', 'user', 'message', 'is_user', 'timestamp']

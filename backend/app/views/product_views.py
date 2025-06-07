@@ -20,8 +20,18 @@ def getProducts(request):
     product = Product.objects.all()
     serializer = ProductSerializer(product, many=True)
     return Response(serializer.data)
-
-
+@api_view(['GET'])
+def get_products(request):
+    search_query = request.GET.get('search', '')
+    products = Product.objects.filter(
+        name__icontains=search_query
+    ) | Product.objects.filter(
+        category__icontains=search_query
+    ) | Product.objects.filter(
+        description__icontains=search_query
+    )
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
 @api_view(['GET'])
 def getProduct(request, pk):
     product = Product.objects.get(_id=pk)
@@ -54,15 +64,15 @@ def updateProduct(request, pk):
     try:
         product = Product.objects.get(_id=pk)
         
-        # Initialize serializer with BOTH instance and data
+
         serializer = ProductSerializer(
             instance=product, 
-            data=request.data,  # Add data parameter
-            partial=True  # Allow partial updates
+            data=request.data, 
+            partial=True 
         )
         
         if serializer.is_valid():
-            serializer.save()  # This handles all field updates
+            serializer.save() 
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -75,11 +85,9 @@ def updateProduct(request, pk):
 @permission_classes([IsAdminUser])
 @parser_classes([MultiPartParser, FormParser])
 def uploadImage(request):
-    # Debug: what DRF sees
     print("CONTENT_TYPE:", request.content_type)
     print("FILES:", request.FILES)
 
-    # Pull in the product
     product_id = request.data.get('product_id')
     try:
         product = Product.objects.get(_id=product_id)
@@ -89,21 +97,17 @@ def uploadImage(request):
             status=status.HTTP_404_NOT_FOUND
         )
 
-    # Make sure a file was provided
     file_obj = request.FILES.get('image')
     if not file_obj:
         return Response(
             {'detail': 'No image file provided'}, 
             status=status.HTTP_400_BAD_REQUEST
         )
-
-    # Save it on the model's ImageField
     product.image.save(file_obj.name, file_obj, save=True)
 
-    # Build the URL (relative or absolute)
+
     image_url = product.image.url
-    # If you want an absolute URL instead, uncomment:
-    # image_url = request.build_absolute_uri(image_url)
+
 
     return Response({'image': image_url}, status=status.HTTP_200_OK)
 

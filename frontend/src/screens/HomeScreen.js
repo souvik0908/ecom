@@ -13,7 +13,7 @@ function HomeScreen() {
   const { loading, error, products } = productList;
   useEffect(() => {
     dispatch(listProducts());
-  }, [dispatch]); // 🠀 Add [dispatch] or [] as the dependency array
+  }, [dispatch]);
   return (
     <div>
       <h1>Latest Products</h1>

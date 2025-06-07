@@ -1,0 +1,3 @@
+hello : Hi! How can I assist you today?
+price for mac book? : Prices for MacBooks vary based on model and configuration. Please visit our website or contact a sales representative for the latest pricing information.
+hellos : Hello! How can I assist you today?

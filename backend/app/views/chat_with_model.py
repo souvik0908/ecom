@@ -6,11 +6,10 @@ import requests
 import json
 import jwt
 from django.conf import settings
-
+import os
 @csrf_exempt
 def chat_with_model(request):
     try:
-        # --- Extract and validate JWT token ---
         auth_header = request.headers.get('Authorization', None)
         if not auth_header or not auth_header.startswith('Bearer '):
             return JsonResponse({"error": "Authentication required. Please log in."}, status=401)
@@ -23,11 +22,8 @@ def chat_with_model(request):
         except (jwt.DecodeError, jwt.ExpiredSignatureError, User.DoesNotExist):
             return JsonResponse({"error": "Invalid or expired token. Please log in again."}, status=401)
 
-        # --- Get message from frontend ---
         data = json.loads(request.body)
         user_message = data['messages'][-1]['content']
-
-        # --- Product Catalog (all products) ---
         products = Product.objects.all()
 
         product_text = (
@@ -44,7 +40,6 @@ Description: {p.description}"""
             ]) if products.exists() else "No products available right now."
         )
 
-        # --- User's Order History ---
         orders = Order.objects.filter(user=user).prefetch_related('orderitem_set')
 
         if orders.exists():
@@ -65,7 +60,6 @@ Items:
         else:
             order_text = "You have not placed any orders yet."
 
-        # --- Prompt for LLM ---
         prompt = [
             {
                 "role": "system",
@@ -88,8 +82,6 @@ Follow these rules:
                 "content": user_message
             }
         ]
-
-        # --- Ollama model call ---
         res = requests.post(
             "http://localhost:11435/api/chat",
             json={
@@ -102,8 +94,6 @@ Follow these rules:
         res.raise_for_status()
         response_data = res.json()
         reply = response_data.get("message", {}).get("content", "Sorry, I couldn’t fetch that.")
-
-        # --- Detect product mentions in reply ---
         detected_products = []
         product_names = {p.name.lower(): p for p in products}
         for line in reply.split('\n'):
@@ -117,8 +107,6 @@ Follow these rules:
                         "link": f"/products/{product._id}"
                     })
                     break
-
-        # Remove duplicates
         seen = set()
         unique_products = []
         for p in detected_products:
@@ -126,10 +114,14 @@ Follow these rules:
                 seen.add(p['id'])
                 unique_products.append(p)
 
+        with open(os.path.join(settings.BASE_DIR, "chat_history.txt"), "a", encoding="utf-8") as file:
+            file.write(user_message + " : " + reply + "\n")
+
         return JsonResponse({
             "message": {"content": reply},
             "products": unique_products
         })
+
 
     except json.JSONDecodeError:
         return JsonResponse({"error": "Invalid request format"}, status=400)

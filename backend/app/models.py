@@ -69,3 +69,11 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return str(self.address)
+class ChatMessage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_user = models.BooleanField(default=True)  # True if user, False if bot
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{'User' if self.is_user else 'Bot'}: {self.message[:50]}"

@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Navbar, Nav, Container, Row, NavDropdown } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Row,
+  NavDropdown,
+  Form,
+  FormControl,
+  Button,
+  Col,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../actions/userActions";
 import ChatLogo from "../screens/ChatLogo";
 function Header() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
+  const [query, setQuery] = useState("");
+  const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toggleChat = () => {
     const chatWidget = document.getElementById("chat-widget");
     if (chatWidget) {
@@ -16,8 +30,26 @@ function Header() {
         chatWidget.style.display === "none" ? "block" : "none";
     }
   };
+  const fetchProducts = async (searchTerm = "") => {
+    const { data } = await axios.get(
+      `http://127.0.0.1:8000/api/products/products_search/?search=${searchTerm}`
+    );
+    setProducts(data);
+  };
   const logoutHandler = () => {
     dispatch(logout());
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?keyword=${query}`);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -75,6 +107,18 @@ function Header() {
           <Nav.Link as="div" onClick={toggleChat} style={{ cursor: "pointer" }}>
             <ChatLogo />
           </Nav.Link>
+          <Form className="d-flex mb-4" onSubmit={handleSearch}>
+            <FormControl
+              type="search"
+              placeholder="Search products..."
+              className="me-2"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <Button variant="primary" type="submit">
+              Search
+            </Button>
+          </Form>
         </Container>
       </Navbar>
     </header>

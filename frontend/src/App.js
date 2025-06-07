@@ -19,6 +19,7 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import ChatScreen from './screens/ChatBotScreen';
 import ChatBotScreen from './screens/ChatBotScreen';
+import SearchScreen from './screens/SearchScreen';
 function App() {
   return (
     <Router>
@@ -27,6 +28,7 @@ function App() {
         <Container>
           <Routes>
             <Route path='/' element={<HomeScreen />} exact />
+            <Route path="/search" element={<SearchScreen />} />
             <Route path='/chatbot' element={<ChatScreen />} exact />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/profile' element={<ProfileScreen/>} />
