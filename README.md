@@ -14,35 +14,6 @@ This project simulates a conversational sales assistant for an e-commerce platfo
 
 ---
 
-## 📁 Project Structure
-
-ecommerce-chatbot/
-│
-├── backend/ # Django backend
-│ ├── app/
-│ │ ├── models.py # Product, Order, OrderItem models
-│ │ ├── views # Folder contains all Views.py
-│ │ └── urls   # Folder contains all urls.py
-│ ├── manage.py
-│ ├── db.sqlite3 # Mock database with 100+ products
-│ └── settings.py
-│
-├── frontend/ # React frontend
-│ ├── src/
-│ │ ├── components/
-│ │ ├── screens/
-│ │ ├── Actions/
-│ │ ├── Reducers/
-│ │ ├── App.js
-│ │ └── index.js
-│ └── public/
-│
-├── chat_response.txt # Stores all chatbot interactions
-├── README.md
-└── requirements.txt
-
----
-
 ## 🧑‍💻 Features
 
 ### ✅ Frontend
